@@ -1,0 +1,303 @@
+/*
+ * Trackball multi-layer gesture definitions
+ *
+ * Current layer mapping:
+ *
+ *  6  Function / Arrow gesture
+ *  8  Tab control gesture
+ *  9  Virtual desktop gesture
+ * 10  Navigation gesture
+ * 11  Window management gesture
+ * 12  PowerToys gesture
+ */
+
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+#include <dt-bindings/zmk/keys.h>
+#include <mouse-gesture.dtsi>
+
+/ {
+    /*
+     * Explorer normalization macro
+     *
+     * 1. Ctrl + Shift + 6
+     * 2. Ctrl + Keypad Plus
+     */
+
+    macros {
+        exp_normalize: exp_normalize {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <40>;
+
+            bindings =
+                <&kp LC(LS(N6))>,
+                <&kp LC(KP_PLUS)>;
+        };
+    };
+
+    /*
+     * Enable or disable the gesture engine dynamically.
+     *
+     * Gesture-enabled layers:
+     *
+     *  6  Function / Arrow
+     *  8  Tab Control
+     *  9  Virtual Desktop
+     * 10  Navigation
+     * 11  Window Management
+     * 12  PowerToys
+     */
+
+    layer_listeners {
+        compatible = "zmk,layer-listeners";
+
+        gesture_switch {
+            layers = <6 8 9 10 11 12>;
+            bindings = <&mouse_gesture_on &mouse_gesture_off>;
+        };
+    };
+
+    /*
+     * Layer 6
+     * Arrow Keys
+     */
+
+    arrow_gest_proc: arrow_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+
+        enable-eager-mode;
+        stroke-size = <15>;
+        movement-threshold = <4>;
+        idle-timeout-ms = <50>;
+        gesture-cooldown-ms = <50>;
+
+        up {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp UP>;
+        };
+
+        down {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp DOWN>;
+        };
+
+        left {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LEFT>;
+        };
+
+        right {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp RIGHT>;
+        };
+    };
+
+    /*
+     * Layer 8
+     * Browser Tab Control
+     */
+
+    tab_gest_proc: tab_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+
+        enable-eager-mode;
+        stroke-size = <20>;
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LC(LS(T))>;
+        };
+
+        down {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp LC(W)>;
+        };
+
+        left {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LC(LS(TAB))>;
+        };
+
+        right {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LC(TAB)>;
+        };
+    };
+
+    /*
+     * Layer 9
+     * Virtual Desktops
+     */
+
+    vdesktop_gest_proc: vdesktop_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+
+        enable-eager-mode;
+        stroke-size = <20>;
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LG(TAB)>;
+        };
+
+        down {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp LA(TAB)>;
+        };
+
+        left {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LC(LG(LEFT))>;
+        };
+
+        right {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LC(LG(RIGHT))>;
+        };
+    };
+
+    /*
+     * Layer 10
+     * Navigation
+     */
+
+    nav_gest_proc: nav_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+
+        enable-eager-mode;
+        stroke-size = <20>;
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LA(UP)>;
+        };
+
+        down {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&exp_normalize>;
+        };
+
+        left {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LA(LEFT)>;
+        };
+
+        right {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LA(RIGHT)>;
+        };
+    };
+
+    /*
+     * Layer 11
+     * Window Management
+     */
+
+    win_gest_proc: win_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+
+        enable-eager-mode;
+        stroke-size = <20>;
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LG(UP)>;
+        };
+
+        down {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp LG(DOWN)>;
+        };
+
+        left {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LG(LEFT)>;
+        };
+
+        right {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LG(RIGHT)>;
+        };
+    };
+
+    /*
+     * Layer 12
+     * PowerToys
+     */
+
+    powertoys_gest_proc: powertoys_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+
+        enable-eager-mode;
+        stroke-size = <25>;
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LC(LG(T))>;
+        };
+
+        down {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp LC(LS(LG(T)))>;
+        };
+
+        left {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LS(LG(H))>;
+        };
+
+        right {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LS(LG(D))>;
+        };
+    };
+};
+
+/*
+ * Route trackball input to the gesture processor associated
+ * with each active layer.
+ *
+ * zip_xy_scaler 0 1 suppresses normal pointer movement while
+ * the gesture processor is active.
+ */
+
+&trackball_central_listener {
+#define GESTURE_ROUTE(L, PROC) \
+    route_l##L { \
+        layers = <L>; \
+        input-processors = < \
+            &PROC \
+            &zip_xy_scaler 0 1 \
+        >; \
+    };
+
+    GESTURE_ROUTE(6, arrow_gest_proc)
+    GESTURE_ROUTE(8, tab_gest_proc)
+    GESTURE_ROUTE(9, vdesktop_gest_proc)
+    GESTURE_ROUTE(10, nav_gest_proc)
+    GESTURE_ROUTE(11, win_gest_proc)
+    GESTURE_ROUTE(12, powertoys_gest_proc)
+};
