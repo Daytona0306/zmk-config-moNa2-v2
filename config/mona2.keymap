@@ -12,6 +12,21 @@
 #include <dt-bindings/zmk/pointing.h>
 
 /*
+ * 従来のレイヤー方式によるマウスジェスチャー。
+ *
+ * gestures.dtsi内の対象レイヤー:
+ *
+ *  6  Arrow
+ *  8  Tab Control
+ *  9  Virtual Desktop
+ * 10  Navigation
+ * 11  Window Management
+ * 12  PowerToys
+ */
+
+#include "gestures.dtsi"
+
+/*
  * Layer layout
  *
  *  0  Windows base
@@ -20,13 +35,13 @@
  *  3  Symbol 2
  *  4  Mouse
  *  5  Number / Scroll
- *  6  Function / Navigation
+ *  6  Function / Navigation / Arrow Gesture
  *  7  BLE / Configuration
- *  8  Mouse Gesture 0
- *  9  Mouse Gesture 1
- * 10  Mouse Gesture 2
- * 11  Mouse Gesture 3
- * 12  Mouse Gesture 4
+ *  8  Tab Control Gesture
+ *  9  Virtual Desktop Gesture
+ * 10  Navigation Gesture
+ * 11  Window Management Gesture
+ * 12  PowerToys Gesture
  */
 
 #define WIN_BASE       0
@@ -44,11 +59,20 @@
 #define GESTURE_3      11
 #define GESTURE_4      12
 
+/*
+ * ZMK側の既定値を上書きする。
+ */
+
 #undef ZMK_POINTING_DEFAULT_SCRL_VAL
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 
 /*
- * DYA Studio用Mouse Gesture behaviors
+ * Mouse Gesture Studio用ビヘイビア。
+ *
+ * 従来のレイヤー方式とは別系統。
+ * 当面はキーへ割り当てず、DYA Studioから必要に応じて使用する。
+ *
+ * Mouse Gesture Studioが認識するKey 0～2のみを定義する。
  */
 
 / {
@@ -70,53 +94,11 @@
             #binding-cells = <0>;
             display-name = "Mouse Gesture Key 2";
         };
-
-        mg_set_3: behavior_mg_set_3 {
-            compatible = "zmk,behavior-mg-set-fixed";
-            #binding-cells = <0>;
-            display-name = "Mouse Gesture Key 3";
-        };
-
-        mg_set_4: behavior_mg_set_4 {
-            compatible = "zmk,behavior-mg-set-fixed";
-            #binding-cells = <0>;
-            display-name = "Mouse Gesture Key 4";
-        };
-
-        mg_set_5: behavior_mg_set_5 {
-            compatible = "zmk,behavior-mg-set-fixed";
-            #binding-cells = <0>;
-            display-name = "Mouse Gesture Key 5";
-        };
-
-        mg_set_6: behavior_mg_set_6 {
-            compatible = "zmk,behavior-mg-set-fixed";
-            #binding-cells = <0>;
-            display-name = "Mouse Gesture Key 6";
-        };
-
-        mg_set_7: behavior_mg_set_7 {
-            compatible = "zmk,behavior-mg-set-fixed";
-            #binding-cells = <0>;
-            display-name = "Mouse Gesture Key 7";
-        };
-
-        mg_set_8: behavior_mg_set_8 {
-            compatible = "zmk,behavior-mg-set-fixed";
-            #binding-cells = <0>;
-            display-name = "Mouse Gesture Key 8";
-        };
-
-        mg_set_9: behavior_mg_set_9 {
-            compatible = "zmk,behavior-mg-set-fixed";
-            #binding-cells = <0>;
-            display-name = "Mouse Gesture Key 9";
-        };
     };
 };
 
 /*
- * Mod-Tap / Layer-Tap
+ * Mod-Tap
  */
 
 &mt {
@@ -125,6 +107,10 @@
     require-prior-idle-ms = <125>;
     tapping-term-ms = <180>;
 };
+
+/*
+ * Layer-Tap
+ */
 
 &lt {
     quick-tap-ms = <250>;
@@ -144,6 +130,10 @@
 };
 
 / {
+    /*
+     * SYM2レイヤーでスクロールを5倍にするinput processor。
+     */
+
     input_processors {
         zip_wheel_scaler: zip_wheel_scaler {
             compatible = "zmk,input-processor-scaler";
@@ -157,14 +147,16 @@
     /*
      * 既存コンボ
      *
-     * 静的コンボとして維持するため、
-     * DYA Studioのruntime comboスロットは消費しない。
+     * 静的コンボとして保持する。
+     * DYA Studioのruntime comboスロットは使用しない。
+     *
+     * runtime_combo_defaultsは記載しない。
      */
 
     combos {
         compatible = "zmk,combos";
 
-        Gesture_ESC {
+        gesture_esc {
             bindings = <&lt GESTURE_0 ESC>;
             key-positions = <39 38>;
         };
@@ -189,32 +181,32 @@
             key-positions = <21 22>;
         };
 
-        BS {
+        bs {
             bindings = <&kp BACKSPACE>;
             key-positions = <8 9>;
         };
 
-        LANG_2 {
+        lang_2 {
             bindings = <&kp LANGUAGE_2>;
             key-positions = <12 13>;
         };
 
-        LANG_1 {
+        lang_1 {
             bindings = <&kp LANGUAGE_1>;
             key-positions = <17 18>;
         };
 
-        BLE_Config {
+        ble_config_combo {
             bindings = <&mo BLE_CONFIG>;
             key-positions = <29 30>;
         };
 
-        Num_Scroll {
+        num_scroll_combo {
             bindings = <&mo SCROLL_LAYER>;
             key-positions = <31 30>;
         };
 
-        Soft-Off {
+        soft_off_combo {
             bindings = <&soft_off>;
             key-positions = <17 18 12 13 37 40>;
         };
@@ -224,27 +216,16 @@
             key-positions = <2 3>;
         };
 
-        Ring_Menu {
+        ring_menu {
             bindings = <&Left_Right_Click>;
             key-positions = <29 31>;
         };
     };
 
     /*
-     * DYA Studio runtime combo
-     *
-     * コンパイル時デフォルトは設定しない。
-     * runtime comboスロットはすべて空けておく。
-     */
-
-    runtime_combo_defaults {
-        compatible = "cormoran,runtime-combo-defaults";
-    };
-
-    /*
      * Static macros
      *
-     * P1はDYA Studioで作成・割り当てするため記載しない。
+     * P1はDYA Studioでruntime macroとして作成する。
      */
 
     macros {
@@ -343,7 +324,7 @@
     };
 
     /*
-     * Behaviors
+     * Custom behaviors
      */
 
     behaviors {
@@ -366,9 +347,10 @@
         };
 
         /*
-         * エンコーダのレイヤー別動作は
-         * DYA Studioで再設定する。
+         * エンコーダはDYA Studioでレイヤーごとに再設定する。
+         * コンパイル時の初期値は縦スクロール。
          */
+
         rsr_default: rsr_default {
             compatible = "zmk,behavior-runtime-sensor-rotate";
             #sensor-binding-cells = <0>;
@@ -430,10 +412,10 @@
             display-name = "WIN";
 
             bindings = <
-&lt GESTURE_4 Q  &lt GESTURE_1 L  &lt GESTURE_3 U  &lt GESTURE_0 COMMA        &lt GESTURE_2 PERIOD                                            &kp F       &kp W  &kp R       &kp Y                &kp P
-&mt LCTRL E       &kp I             &lt FUNCTION_LAYER A  &lt MOUSE_LAYER O      &kp MINUS                                  &kp F13     &kp K       &kp T       &lt FUNCTION_LAYER N &kp S                &kp H
-&mt LSHIFT Z      &kp X             &kp C                 &kp V                    &kp SEMICOLON  &kp LA(LG(K))          &kp C_MUTE  &kp G       &kp D       &kp M                &mt RALT J           &lt MOUSE_LAYER B
-&kp LALT          &kp LEFT_WIN      &kp TAB               &mt LSHIFT INT_MUHENKAN  &lt SCROLL_LAYER ENTER  &mt LCTRL BACKSPACE  &lt SYM2_LAYER DEL  &lt NUM_LAYER SPACE                             &mt RSHIFT INT_HENKAN
+&lt GESTURE_4 Q  &lt GESTURE_1 L  &lt GESTURE_3 U       &lt GESTURE_0 COMMA        &lt GESTURE_2 PERIOD                                            &kp F       &kp W  &kp R       &kp Y                &kp P
+&mt LCTRL E       &kp I             &lt FUNCTION_LAYER A  &lt MOUSE_LAYER O          &kp MINUS                                  &kp F13     &kp K       &kp T       &lt FUNCTION_LAYER N &kp S                &kp H
+&mt LSHIFT Z      &kp X             &kp C                 &kp V                       &kp SEMICOLON  &kp LA(LG(K))          &kp C_MUTE  &kp G       &kp D       &kp M                &mt RALT J           &lt MOUSE_LAYER B
+&kp LALT          &kp LEFT_WIN      &kp TAB               &mt LSHIFT INT_MUHENKAN     &lt SCROLL_LAYER ENTER  &mt LCTRL BACKSPACE  &lt SYM2_LAYER DEL  &lt NUM_LAYER SPACE                             &mt RSHIFT INT_HENKAN
             >;
 
             sensor-bindings =
@@ -445,7 +427,7 @@
          * Layer 1
          * Mac / iPad base
          *
-         * Windowsベースと同じキー構成。
+         * Windowsベースと同じ配列。
          * サブレイヤーは共通レイヤーを使用する。
          */
 
@@ -453,10 +435,10 @@
             display-name = "MAC";
 
             bindings = <
-&lt GESTURE_4 Q  &lt GESTURE_1 L  &lt GESTURE_3 U  &lt GESTURE_0 COMMA        &lt GESTURE_2 PERIOD                                            &kp F       &kp W  &kp R       &kp Y                &kp P
-&mt LCTRL E       &kp I             &lt FUNCTION_LAYER A  &lt MOUSE_LAYER O      &kp MINUS                                  &kp F13     &kp K       &kp T       &lt FUNCTION_LAYER N &kp S                &kp H
-&mt LSHIFT Z      &kp X             &kp C                 &kp V                    &kp SEMICOLON  &kp LA(LG(K))          &kp C_MUTE  &kp G       &kp D       &kp M                &mt RALT J           &lt MOUSE_LAYER B
-&kp LALT          &kp LEFT_WIN      &kp TAB               &mt LSHIFT INT_MUHENKAN  &lt SCROLL_LAYER ENTER  &mt LCTRL BACKSPACE  &lt SYM2_LAYER DEL  &lt NUM_LAYER SPACE                             &mt RSHIFT INT_HENKAN
+&lt GESTURE_4 Q  &lt GESTURE_1 L  &lt GESTURE_3 U       &lt GESTURE_0 COMMA        &lt GESTURE_2 PERIOD                                            &kp F       &kp W  &kp R       &kp Y                &kp P
+&mt LCTRL E       &kp I             &lt FUNCTION_LAYER A  &lt MOUSE_LAYER O          &kp MINUS                                  &kp F13     &kp K       &kp T       &lt FUNCTION_LAYER N &kp S                &kp H
+&mt LSHIFT Z      &kp X             &kp C                 &kp V                       &kp SEMICOLON  &kp LA(LG(K))          &kp C_MUTE  &kp G       &kp D       &kp M                &mt RALT J           &lt MOUSE_LAYER B
+&kp LALT          &kp LEFT_WIN      &kp TAB               &mt LSHIFT INT_MUHENKAN     &lt SCROLL_LAYER ENTER  &mt LCTRL BACKSPACE  &lt SYM2_LAYER DEL  &lt NUM_LAYER SPACE                             &mt RSHIFT INT_HENKAN
             >;
 
             sensor-bindings =
@@ -514,7 +496,7 @@
 &kp ESCAPE  &kp N7        &kp N8            &kp N9        &trans                          &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &trans             &trans
 &kp EQUAL   &kp NUMBER_4  &kp N5            &kp NUMBER_6  &kp KP_MINUS            &trans  &mkp MB5    &trans        &mo SCROLL_LAYER    &trans             &mkp MB5
 &kp N0      &kp NUMBER_1  &kp NUMBER_2      &kp NUMBER_3  &kp KP_PLUS   &trans    &trans  &mkp MB4    &mkp MB1          &mkp MB3           &mkp MB2  &mkp MB4
-&kp DOT     &kp COMMA     &kp LEFT_BRACKET  &trans        &trans        &trans    &trans  &trans                                                       &trans
+&kp DOT     &kp COMMA     &kp LEFT_BRACKET  &trans        &trans        &trans    &trans  &trans                                                       &to WIN_BASE
             >;
 
             sensor-bindings = <&rsr_default>;
@@ -541,6 +523,9 @@
         /*
          * Layer 6
          * Function / Navigation
+         *
+         * AまたはN長押し中は、gestures.dtsiによって
+         * トラックボールが矢印ジェスチャーとして動作する。
          */
 
         function_layer {
@@ -565,10 +550,10 @@
             display-name = "BLE";
 
             bindings = <
-&bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3    &bt BT_SEL 4                           &BT0          &BT1          &trans       &trans  &trans
-&bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3   &bt BT_DISC 4                  &trans  &out OUT_TOG  &trans        &trans       &trans  &studio_unlock
-&bt BT_SEL 5   &bt BT_SEL 6   &trans         &studio_unlock  &out OUT_BLE   &out OUT_USB    &bootloader   &trans        &trans       &trans  &trans  &bt BT_CLR
-&bt BT_DISC 5  &bt BT_DISC 6  &trans         &trans          &trans         &bt BT_CLR      &trans        &bootloader                              &bt BT_CLR_ALL
+&bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3    &bt BT_SEL 4                           &BT0          &BT1          &trans        &trans  &trans
+&bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3   &bt BT_DISC 4                  &trans  &out OUT_TOG  &trans        &trans        &trans  &studio_unlock
+&bt BT_SEL 5   &bt BT_SEL 6   &trans         &studio_unlock  &out OUT_BLE   &out OUT_USB    &bootloader   &trans        &trans        &trans  &trans  &bt BT_CLR
+&bt BT_DISC 5  &bt BT_DISC 6  &trans         &trans          &trans         &bt BT_CLR      &trans        &bootloader                               &bt BT_CLR_ALL
             >;
 
             sensor-bindings = <&rsr_default>;
@@ -576,7 +561,7 @@
 
         /*
          * Layer 8
-         * Mouse Gesture 0
+         * Browser Tab Control Gesture
          */
 
         gesture_0 {
@@ -594,7 +579,7 @@
 
         /*
          * Layer 9
-         * Mouse Gesture 1
+         * Virtual Desktop Gesture
          */
 
         gesture_1 {
@@ -612,7 +597,7 @@
 
         /*
          * Layer 10
-         * Mouse Gesture 2
+         * Navigation Gesture
          */
 
         gesture_2 {
@@ -630,7 +615,7 @@
 
         /*
          * Layer 11
-         * Mouse Gesture 3
+         * Window Management Gesture
          */
 
         gesture_3 {
@@ -648,7 +633,7 @@
 
         /*
          * Layer 12
-         * Mouse Gesture 4
+         * PowerToys Gesture
          */
 
         gesture_4 {
@@ -667,7 +652,7 @@
 };
 
 /*
- * 旧SYM2レイヤーのスクロール5倍設定を維持する。
+ * 旧SYM2レイヤーのスクロール5倍設定。
  */
 
 &msc_input_listener {
