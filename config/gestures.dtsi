@@ -9,20 +9,37 @@
  * 10  Navigation gesture
  * 11  Window management gesture
  * 12  PowerToys gesture
- */
+ /
 
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <dt-bindings/zmk/keys.h>
 #include <mouse-gesture.dtsi>
 
+/
+ * Compatibility adjustment for the suppress-cursor-while-active branch.
+ *
+ * mouse_gesture is an activation behavior:
+ *     compatible = "zmk,behavior-mouse-gesture"
+ *
+ * stroke-size belongs to a mouse gesture input processor:
+ *     compatible = "zmk,input-processor-mouse-gesture"
+ *
+ * Remove stroke-size from the activation behavior while keeping the
+ * property on the individual input processors defined below.
+ /
+
+&mouse_gesture {
+    /delete-property/ stroke-size;
+};
+
 / {
-    /*
+    /
      * Explorer normalization macro
      *
      * 1. Ctrl + Shift + 6
      * 2. Ctrl + Keypad Plus
-     */
+     /
 
     macros {
         exp_normalize: exp_normalize {
@@ -37,7 +54,7 @@
         };
     };
 
-    /*
+    /
      * Enable or disable the gesture engine dynamically.
      *
      * Gesture-enabled layers:
@@ -48,7 +65,7 @@
      * 10  Navigation
      * 11  Window Management
      * 12  PowerToys
-     */
+     /
 
     layer_listeners {
         compatible = "zmk,layer-listeners";
@@ -59,10 +76,10 @@
         };
     };
 
-    /*
+    /
      * Layer 6
      * Arrow Keys
-     */
+     /
 
     arrow_gest_proc: arrow_gest_proc {
         compatible = "zmk,input-processor-mouse-gesture";
@@ -95,10 +112,10 @@
         };
     };
 
-    /*
+    /
      * Layer 8
      * Browser Tab Control
-     */
+     /
 
     tab_gest_proc: tab_gest_proc {
         compatible = "zmk,input-processor-mouse-gesture";
@@ -131,10 +148,10 @@
         };
     };
 
-    /*
+    /
      * Layer 9
      * Virtual Desktops
-     */
+     /
 
     vdesktop_gest_proc: vdesktop_gest_proc {
         compatible = "zmk,input-processor-mouse-gesture";
@@ -167,10 +184,10 @@
         };
     };
 
-    /*
+    /
      * Layer 10
      * Navigation
-     */
+     /
 
     nav_gest_proc: nav_gest_proc {
         compatible = "zmk,input-processor-mouse-gesture";
@@ -203,10 +220,10 @@
         };
     };
 
-    /*
+    /
      * Layer 11
      * Window Management
-     */
+     /
 
     win_gest_proc: win_gest_proc {
         compatible = "zmk,input-processor-mouse-gesture";
@@ -239,10 +256,10 @@
         };
     };
 
-    /*
+    /
      * Layer 12
      * PowerToys
-     */
+     /
 
     powertoys_gest_proc: powertoys_gest_proc {
         compatible = "zmk,input-processor-mouse-gesture";
@@ -276,7 +293,7 @@
     };
 };
 
-/*
+/
  * Route trackball input to the gesture processor associated
  * with each active layer.
  *
@@ -285,13 +302,13 @@
  */
 
 &trackball_central_listener {
-#define GESTURE_ROUTE(L, PROC) \
-    route_l##L { \
-        layers = <L>; \
-        input-processors = < \
-            &PROC \
-            &zip_xy_scaler 0 1 \
-        >; \
+#define GESTURE_ROUTE(L, PROC) 
+    route_l##L { 
+        layers = <L>; 
+        input-processors = < 
+            &PROC 
+            &zip_xy_scaler 0 1 
+        >; 
     };
 
     GESTURE_ROUTE(6, arrow_gest_proc)
