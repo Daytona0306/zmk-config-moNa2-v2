@@ -2,22 +2,34 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: cormoran    # <-- DYA Studio (custom ZMK fork + modules)
+
+    - name: cormoran
       url-base: https://github.com/cormoran
+
     - name: sayu-hub
       url-base: https://github.com/sayu-hub
-    - name: badjeff    # <-- PMW3610
+
+    - name: badjeff
       url-base: https://github.com/badjeff
-    - name: sekigon-gonnoc    # <-- PAW3222
+
+    - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
-    - name: caksoylar  # <-- RGB LED
+
+    - name: caksoylar
       url-base: https://github.com/caksoylar
-    - name: zettaface  # <-- Input Processor Keybind
+
+    - name: zettaface
       url-base: https://github.com/zettaface
-    - name: kot149       # <-- Mouse Gesture (upstream)
+
+    - name: kot149
       url-base: https://github.com/kot149
-    - name: shakushakupanda  # <-- mouse gesture RPC module
+
+    - name: shakushakupanda
       url-base: https://github.com/shakushakupanda
+
+    - name: ssbb
+      url-base: https://github.com/ssbb
+      
   projects:
     # ── ZMK 本体 ────────────────────────────────────────────────
     # DYA Studio の最新機能 (ランタイムマクロ / ランタイムコンボ) は
@@ -125,16 +137,18 @@ manifest:
       remote: zettaface
       revision: main
 
-    # ── Mouse Gesture (kot149 + custom RPC) ─────────────────────
-    # zmk-module-mouse-gesture-rpc は expose-mg-set-to-studio を main へ
-    # マージ済みのため main を参照する。ZMK v0.4 の endpoints API 改名対応と
-    # 慣性スクロールの既定オフもモジュール側に取り込まれているので、
-    # 以前あった互換シム (compat/) は不要になり削除した。
+    # ── Mouse Gesture ────────────────────────────────────────────
     - name: zmk-mouse-gesture
       remote: shakushakupanda
       revision: suppress-cursor-while-active
+
     - name: zmk-module-mouse-gesture-rpc
       remote: shakushakupanda
       revision: main
+
+    # gestures.dtsiのレイヤー連動ON/OFFに必要
+    - name: zmk-listeners
+      remote: ssbb
+      revision: v1
   self:
     path: config
