@@ -214,7 +214,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - {t: WIN, h: toggle}
   SCRL:
   - {t: ▽, type: trans}
   - Ctl+7
