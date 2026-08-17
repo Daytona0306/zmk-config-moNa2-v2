@@ -51,7 +51,7 @@
  * DYA Studio用Mouse Gesture behaviors
  */
 
- / {
+/ {
     behaviors {
         mg_set_0: behavior_mg_set_0 {
             compatible = "zmk,behavior-mg-set-fixed";
@@ -575,4 +575,104 @@
         };
 
         /*
- 
+         * Layer 8
+         * Mouse Gesture 0
+         */
+
+        gesture_0 {
+            display-name = "GESTURE_0";
+
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                          &trans
+            >;
+
+            sensor-bindings = <&rsr_default>;
+        };
+
+        /*
+         * Layer 9
+         * Mouse Gesture 1
+         */
+
+        gesture_1 {
+            display-name = "GESTURE_1";
+
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                          &trans
+            >;
+
+            sensor-bindings = <&rsr_default>;
+        };
+
+        /*
+         * Layer 10
+         * Mouse Gesture 2
+         */
+
+        gesture_2 {
+            display-name = "GESTURE_2";
+
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                          &trans
+            >;
+
+            sensor-bindings = <&rsr_default>;
+        };
+
+        /*
+         * Layer 11
+         * Mouse Gesture 3
+         */
+
+        gesture_3 {
+            display-name = "GESTURE_3";
+
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                          &trans
+            >;
+
+            sensor-bindings = <&rsr_default>;
+        };
+
+        /*
+         * Layer 12
+         * Mouse Gesture 4
+         */
+
+        gesture_4 {
+            display-name = "GESTURE_4";
+
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                          &trans
+            >;
+
+            sensor-bindings = <&rsr_default>;
+        };
+    };
+};
+
+/*
+ * 旧SYM2レイヤーのスクロール5倍設定を維持する。
+ */
+
+&msc_input_listener {
+    speed_up {
+        layers = <SYM2_LAYER>;
+        input-processors = <&zip_wheel_scaler 5 1>;
+    };
+};
