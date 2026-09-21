@@ -142,6 +142,38 @@ artifacts から取る。**ファームには config リポジトリのバージ
 
 ## E. 記録
 
+### このリポジトリには2つの系統があり、合流していない
+
+設定が「本家にはあるのにこちらに無い」と見えたとき、まずこれを疑うこと。
+
+```
+公開側   … 20abb82 (5/1) → dya-studio (8/16) → my-dya-studio (8/18)
+              ╲
+               ╲ 合流していない
+                ╲
+v0.4 の中身  … v0.3 系 (4月) ──────────→ v0.4 移行 (9/13〜) → いまの main
+```
+
+v0.4 移行は**稼働していた v0.3 系を土台に組み直した**もので、公開側の
+`dya-studio` / `my-dya-studio`（2026年8月の線）は取り込んでいない。
+そのため8月の線にだけ入った設定は「消えた」のではなく**最初から継いでいない**。
+
+実例として、次の3つがこの経緯で欠けていた（2026-09-21 に補った）。
+
+| 設定 | 側 |
+|---|---|
+| `CONFIG_EC11_TRIGGER_OWN_THREAD` ＋ `_THREAD_PRIORITY` / `_THREAD_STACK_SIZE` | 左 |
+| `CONFIG_ZMK_WATCHDOG` | 左 |
+| `CONFIG_USB_HID_POLL_INTERVAL_MS` | 右 |
+
+一方 `CONFIG_BT_PERIPHERAL_PREF_MIN_INT` / `MAX_INT` は**意図して外したもの**。
+`CONFIG_ZMK_BLE_EXPERIMENTAL_CONN=y` が接続パラメータを自前で扱うため重複する。
+本家は EXPERIMENTAL_CONN を使わず明示指定する方式なので、そこだけ設計が違う。
+**戻さないこと。**
+
+本家 main は現在 `dya-studio` を統合済みで、それ以降はドキュメントのみ。
+モジュール構成も追跡先も一致しているので、取り込むべき機能差は無い。
+
 ### v0.3 から引き継いだ値で、根拠を残してあるもの
 
 - `CONFIG_PMW3610_REPORT_INTERVAL_MIN=15` — **上げないこと。**
