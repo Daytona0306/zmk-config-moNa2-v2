@@ -26,8 +26,8 @@
  *
  * 200 のままだと 3カウント = 3/16 ノッチで、5〜6クリック回さないと 1行
  * 進まない。トラックボール側 (zip_wheel_scaler) はこの値を通らないので
- * ここを上げても影響しない。SYM2 の &zip_wheel_scaler 5 1 は掛け算なので
- * 5ノッチ/クリックのまま変わらない。 */
+ * ここを上げても影響しない。SYM2 の &zip_wheel_scaler 3 1 は掛け算なので
+ * 3ノッチ/クリックのまま変わらない。 */
 #undef ZMK_POINTING_DEFAULT_SCRL_VAL
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 1000
 #include <dt-bindings/zmk/pointing.h>
@@ -429,6 +429,6 @@
 &msc_input_listener {
     speed_up {
         layers = <3>; // 感度を上げたいレイヤー番号 (SYM2)
-        input-processors = <&zip_wheel_scaler 5 1>; // 5倍速（分子5、分母1）に設定
+        input-processors = <&zip_wheel_scaler 3 1>; // 3倍速（分子3、分母1）に設定
     };
 };
