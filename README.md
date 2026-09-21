@@ -98,6 +98,14 @@ CONFIG_PMW3610_SWAP_XY=y
 
 ---
 
+## エンコーダーの設定は DYA Studio で変えないこと
+
+キーマップタブ下の「ロータリーエンコーダー設定」で保存すると、その層のエンコーダが無反応になります。保存は成功表示になりますが、ファームが解決できない ID が Flash に残り、実行時に無言で捨てられます。リセット・焼き直しでは直らず、`mona2_reset` で Flash 全消しするしかありません。
+
+エンコーダの割当て・感度は `config/mona2.keymap` (sensor-bindings、`&msc`、`zip_wheel_scaler`) で固定し、再ビルドしてください。
+
+---
+
 ## 左右で揃えないといけない設定
 
 `config/mona2_r.conf` と `config/mona2_l.conf` の両方に必要です。片側だけだとビルドが落ちます。
