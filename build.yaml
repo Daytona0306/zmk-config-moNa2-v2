@@ -17,11 +17,16 @@
 #     artifact-name: corne_left_with_logging
 #
 ---
+# NOTE: ZMK v0.4 (Zephyr 4.1) は Hardware Model v2 のボード命名を要求する。
+#       seeeduino_xiao_ble -> xiao_ble/nrf52840/zmk
 include:
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble/nrf52840/zmk
     shield: mona2_r rgbled_adapter
     snippet: studio-rpc-usb-uart
-  - board: seeeduino_xiao_ble
+    artifact-name: mona2_right
+  - board: xiao_ble/nrf52840/zmk
     shield: mona2_l rgbled_adapter
-  - board: seeeduino_xiao_ble
+    artifact-name: mona2_left
+  - board: xiao_ble/nrf52840/zmk
     shield: settings_reset
+    artifact-name: mona2_reset

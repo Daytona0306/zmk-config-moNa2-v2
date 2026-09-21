@@ -1,7 +1,10 @@
-#include <dt-bindings/zmk/matrix_transform.h>
+#include <physical_layouts.dtsi>
+#include <behaviors/battery_history_request.dtsi>
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
-#include <physical_layouts.dtsi>
+#include <input/processors/runtime-input-processor.dtsi>
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <scroll-snap.dtsi>
 
 / {
     chosen {
@@ -89,18 +92,13 @@
     trackball_central_listener: trackball_central_listener {
         compatible = "zmk,input-listener";
         status = "disabled";
-        input-processors = 
-            <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>;         //Y軸反転
-            //<&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
-            //<&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転
-            //<&zip_temp_layer 5 500>;                            //オートマウスレイヤーの選択
     };
 
     left_encoder: encoder_left {
         compatible = "alps,ec11";
         a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <96>;
+        steps = <24>;
         status = "disabled";
     };
 
@@ -111,17 +109,25 @@
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
-        triggers-per-rotation = <24>;
+        triggers-per-rotation = <10>;
     };
 
-    encoder_left_listener: encoder_left_listener {
-        compatible = "zmk,input-listener";
-        device = <&left_encoder>;
-        status = "okay";
+};
 
-        input-processors = 
-            // 回転をスクロール信号に変換
-            <&zip_xy_to_scroll_mapper>, 
-            <&zip_scroll_scaler 1 4>; 
-    };
+&mouse_runtime_input_processor {
+	//temp-layer-enabled;
+	//temp-layer = <1>;
+};
+
+&scroll_runtime_input_processor {
+	x-codes = <INPUT_REL_X>;
+	y-codes = <INPUT_REL_Y>;
+	xy-to-scroll-enabled;
+	active-layers = <BIT(5)>;
+	/* ホイールの符号はカーソルの Y と逆 (正の WHEEL = 上スクロール、
+	 * 正の REL_Y = カーソル下) なので、縦スクロールだけ1回余分に反転が要る。
+	 * 横は X -> HWHEEL でそのまま合う。torabo-tsuki も同じ。
+	 * v0.3 では Studio の保存値で持っていたため DT に無く、
+	 * settings_reset で上下だけ逆になった。 */
+	y-invert;	/* NUM-SCROLL (iPad レイヤー挿入で 4 -> 5) */	
 };

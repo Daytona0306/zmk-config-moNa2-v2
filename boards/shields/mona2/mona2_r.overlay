@@ -1,7 +1,17 @@
 #include "mona2.dtsi"
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <dt-bindings/zmk/modifiers.h>
+#include <dt-bindings/zmk/mouse-gesture.h>
 
+/* NOTE: <input/processors/runtime-input-processor.dtsi> と <scroll-snap.dtsi> を
+ *   ここで include してはいけない。どちらも mona2.dtsi の先頭で既に読んでおり、
+ *   mona2.dtsi の末尾で &scroll_runtime_input_processor を上書きしている。
+ *   後からもう一度 include すると既定値が再適用され、
+ *       x-codes = <INPUT_REL_HWHEEL>;  y-codes = <INPUT_REL_WHEEL>;
+ *   に戻ってしまう。トラックボールは REL_X / REL_Y を出すので code_idx() が
+ *   両方 -1 を返し、xy-to-scroll 変換が走らずカーソルが動くだけになる。
+ *   (v0.4 移行で実際に踏んだ) */
 
 &default_transform {
     col-offset = <6>;
@@ -46,36 +56,106 @@
     pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;  //P0.09を指定(CS)
 
+    /* cormoran さんの custom Studio RPC 対応 PMW3610 ドライバ。
+     * DYA Studio の「トラックボールセンサー」診断タブがこれを要求する。
+     *
+     * Zephyr 4.1 が純正 "pixart,pmw3610" ドライバを取り込んだため、
+     * 旧 compatible "pixart,pmw3610" (badjeff 版) はそのまま使えない。
+     *
+     * 軸の反転は devicetree ではなく CONFIG_PMW3610_SWAP_XY / _INVERT_X /
+     * _INVERT_Y で指定する (mona2_r.conf 参照)。DYA Studio から実行時にも
+     * 変更できる。 */
     trackball_central: trackball_central@0 {
         status = "okay";
-        compatible = "pixart,pmw3610";  //トラボセンサ用のドライバとバインド
+        compatible = "cormoran,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; //P0.02を指定(MOTION)
         cpi = <600>;
-        //swap-xy;
-        invert-x; //COROPIT版ではコメントアウトを外す
-        invert-y; //COROPIT版ではコメントアウトを外す
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
+        /* DYA Studio 上でこのセンサーを識別するための短い ID */
+        settings-id = "tball";
     };
 };
 
+/* RPC からランタイム編集できるマウスジェスチャー。
+ *
+ * NOTE1: ノード名を mouse_gesture にしないこと。
+ *   zmk-mouse-gesture の mouse-gesture.dtsi が同名のビヘイビアノード
+ *   (compatible = "zmk,behavior-mouse-gesture") を定義しており、
+ *   DTS 上でマージされて binding 不一致でビルドが落ちる。
+ *
+ * NOTE2: zmk_mouse_gesture_runtime_set() は DEVICE_DT_GET(DT_DRV_INST(0))
+ *   固定で、RPC が書き換えるのは DT インスタンス0番のみ。このノードを
+ *   gestures.dtsi の6プロセッサより先に定義して0番を取らせている。
+ *   定義順を変えると壊れる。
+ *
+ * NOTE3: always-active は付けない。&mg_set N を押している間だけ判定が
+ *   有効になる。付けると g_suppress_cursor が立ちっぱなしになり
+ *   全レイヤーでカーソルが止まる (torabo-tsuki で踏んだ)。 */
+/{
+    mg: rpc_mouse_gesture {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        /* モジュール既定の 200 はトラックボールには大きすぎる
+         * (gestures.dtsi の DT 側6セットは 15〜25)。Studio の Reset は
+         * ここの値を再シードするので、既定値の側を実機に合わせておく。 */
+        stroke-size = <20>;
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        /* trie 構築のためのプレースホルダ。実際の割り当ては RPC で上書きされる。 */
+        placeholder {
+            pattern = <GESTURE_UP GESTURE_RIGHT>;
+            bindings = <&kp ESC>;
+        };
+    };
+};
+
+//Scroll inertia processor
+/{
+    scroll_inertia_free: scroll_inertia_free {
+        compatible = "zmk,input-processor-scroll-inertia";
+        #input-processor-cells = <0>;
+        axis      = <0>;          /* 両軸 — 斜めスクロール可能 */
+        layer     = <5>;          /* NUM-SCROLL レイヤー */
+        scale     = <1000>;
+        scale-div = <1000>;
+
+        tick = <17>;
+        release = <51>;
+
+        /* ── 弾き検出のゲート ──
+         * この3つが「小さい動きでは慣性に入らず、大きく弾いたときだけ効く」を
+         * 決めている。start=1 / move=2 / min-events=2 と全開にしていると、
+         * ちょっと触っただけで armed になり弾いたときとの差が出ない。
+         * torabo-tsuki で詰めた値に合わせて既定値寄りにする。 */
+        start = <40>;       /* 慣性に入る最低ピーク速度 (既定 40) */
+        move = <60>;        /* 発動に必要な累積移動量 (既定 80) */
+        min-events = <8>;   /* EMA 収束待ち・ノイズ除去 (既定 10) */
+
+        /* ── 転がり方 ── */
+        gain = <300>;       /* EMA の入力重み。gain + blend = 1000 */
+        blend = <700>;      /* EMA の履歴重み */
+        friction = <20>;    /* 毎ティックの定数減速 (千分率)。下げると伸びる */
+        limit = <900>;      /* 速度上限 (既定 600)。上げると弾きが伸びる */
+        stop = <1>;         /* これを下回ったら即停止 */
+    };
+};
 
 // Overrides for the input listener node
 &trackball_central_listener {
     status = "okay";
     device = <&trackball_central>;
 
-    scroller {
-        layers = <6 7>;
         input-processors = 
-            // <&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
-            <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転
-            <&zip_xy_to_scroll_mapper>,                         //スクロールモードに変更
-            <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,   //スクロールのX軸反転
-            <&zip_scroll_scaler 1 20>;                           //スクロール量を1/20倍
-    };
-
+			<&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+			<&mg>,
+			<&mouse_runtime_input_processor>,
+			<&scroll_runtime_input_processor>,
+			<&zip_scroll_snap>,
+            <&scroll_inertia_free>;
 };
