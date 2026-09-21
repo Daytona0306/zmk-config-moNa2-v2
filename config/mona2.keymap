@@ -8,8 +8,28 @@
 /* pointing.h の #ifndef より前に置くこと。後ろに書くと、ヘッダが既定値 10 で
  * 定義した後の再定義になり "redefined" 警告が出る (展開は遅延なので値自体は
  * 100 で効く)。本家と同じく一旦 undef して定義し直す。 */
+/* ── 1クリック = 1ノッチ になるように逆算した値 ──
+ * この値はカウント数ではなく「速さ」。&msc (zmk,behavior-input-two-axis) は
+ * 押している間 trigger_period_ms (既定 16ms) ごとに
+ *     move = SCRL_VAL * trigger_period_ms / 1000
+ * を出力する (behavior_input_two_axis.c の update_movement_1d)。
+ * 1ティックあたり SCRL_VAL * 0.016 カウント、小数は切り捨て。
+ *
+ * さらに CONFIG_ZMK_POINTING_SMOOTH_SCROLLING=y だと HID の
+ * Resolution Multiplier (hid.h: logical 0-15 / physical 1-16) をホストが
+ * 最大 16 に設定するので、ホスト側で 1カウント = 1/16 ノッチになる。
+ * ZMK 側で補正するはずの input_listener.c の apply_resolution_scaling は
+ * scaled を計算したあと evt->value = val としていて割った結果を捨てている
+ * (本家 main も同じ)。つまりファームは生値を送り、ホストだけが 16 で割る。
+ *
+ *   1000 * 0.016 = 16 カウント → 16/16 = 1ノッチ/クリック
+ *
+ * 200 のままだと 3カウント = 3/16 ノッチで、5〜6クリック回さないと 1行
+ * 進まない。トラックボール側 (zip_wheel_scaler) はこの値を通らないので
+ * ここを上げても影響しない。SYM2 の &zip_wheel_scaler 5 1 は掛け算なので
+ * 5ノッチ/クリックのまま変わらない。 */
 #undef ZMK_POINTING_DEFAULT_SCRL_VAL
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 200
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 1000
 #include <dt-bindings/zmk/pointing.h>
 /* ランタイムマクロの &rmacro <slot> を提供。スロット番号は Studio で
  * マクロを作成したときに割り当てられる。 */
@@ -199,7 +219,12 @@
         scroll_up_down: mouse_wheel_up_down {
             compatible = "zmk,behavior-runtime-sensor-rotate";
             #sensor-binding-cells = <0>;
-            tap-ms = <16>;
+            /* &msc は押下時には何も出さず trigger_period_ms (16ms) 後の
+             * 最初のティックで初めて出力する。tap-ms を 16 にすると
+             * 「ティック」と「離してキャンセル」が同時になり、クリックが
+             * 丸ごと無視されることがある。24 なら必ず 1ティックだけ出る
+             * (次のティックは 32ms なので 2回出ることもない)。 */
+            tap-ms = <24>;
             cw-binding = <&msc SCRL_DOWN>;
             ccw-binding = <&msc SCRL_UP>;
         };
@@ -207,7 +232,12 @@
         scroll_right_left: mouse_wheel_right_left {
             compatible = "zmk,behavior-runtime-sensor-rotate";
             #sensor-binding-cells = <0>;
-            tap-ms = <16>;
+            /* &msc は押下時には何も出さず trigger_period_ms (16ms) 後の
+             * 最初のティックで初めて出力する。tap-ms を 16 にすると
+             * 「ティック」と「離してキャンセル」が同時になり、クリックが
+             * 丸ごと無視されることがある。24 なら必ず 1ティックだけ出る
+             * (次のティックは 32ms なので 2回出ることもない)。 */
+            tap-ms = <24>;
             cw-binding = <&msc SCRL_LEFT>;
             ccw-binding = <&msc SCRL_RIGHT>;
         };
@@ -223,7 +253,12 @@
         new_behavior: new_behavior {
             compatible = "zmk,behavior-runtime-sensor-rotate";
             #sensor-binding-cells = <0>;
-            tap-ms = <16>;
+            /* &msc は押下時には何も出さず trigger_period_ms (16ms) 後の
+             * 最初のティックで初めて出力する。tap-ms を 16 にすると
+             * 「ティック」と「離してキャンセル」が同時になり、クリックが
+             * 丸ごと無視されることがある。24 なら必ず 1ティックだけ出る
+             * (次のティックは 32ms なので 2回出ることもない)。 */
+            tap-ms = <24>;
             cw-binding = <&msc SCRL_LEFT>;
             ccw-binding = <&msc SCRL_RIGHT>;
             label = "NEW_BEHAVIOR";
