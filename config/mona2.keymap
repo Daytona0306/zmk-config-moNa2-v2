@@ -7,8 +7,9 @@
 #include <dt-bindings/zmk/outputs.h>
 /* pointing.h の #ifndef より前に置くこと。後ろに書くと、ヘッダが既定値 10 で
  * 定義した後の再定義になり "redefined" 警告が出る (展開は遅延なので値自体は
- * 100 で効く)。 */
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 100
+ * 100 で効く)。本家と同じく一旦 undef して定義し直す。 */
+#undef ZMK_POINTING_DEFAULT_SCRL_VAL
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 200
 #include <dt-bindings/zmk/pointing.h>
 /* ランタイムマクロの &rmacro <slot> を提供。スロット番号は Studio で
  * マクロを作成したときに割り当てられる。 */
