@@ -24,73 +24,73 @@ manifest:
     # v0.3-branch+dya (Zephyr 3.5) からメジャーバージョンが上がっている。
     - name: zmk
       remote: cormoran
-      revision: main+dya
+      revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8  # track: main+dya
       import: app/west.yml
 
     # ── DYA Studio 共通基盤 ─────────────────────────────────────
     # 設定の永続化レイヤ。runtime 系がすべてこの上に乗るため必須。
     - name: zmk-feature-custom-settings
       remote: cormoran
-      revision: main
+      revision: c6a7fef3a3be3d3ace5de9a4b0628c6418cd1f3f  # track: main
     - name: zmk-module-ble-management
       remote: cormoran
-      revision: main
+      revision: 57738cc4fc6ba80e82a7ac57741a0339cb186cd4  # track: main
     - name: zmk-module-settings-rpc
       remote: cormoran
-      revision: main
+      revision: 78f86df9e6c5edaf57bef3ccbd7f360cfdf49291  # track: main
     - name: zmk-module-runtime-input-processor
       remote: cormoran
-      revision: main
+      revision: 43618985f8c9d5457cc333b7ca0733f2d361911e  # track: main
     - name: zmk-behavior-runtime-sensor-rotate
       remote: cormoran
-      revision: main
+      revision: 8b1125ed676c1f5e14145d217984f33d0ebdcef4  # track: main
     # 機能自体は使っていないが mona2.dtsi が
     # <behaviors/battery_history_request.dtsi> を include しているため必須。
     # 外すと devicetree の前処理で落ちる。
     - name: zmk-module-battery-history
       remote: cormoran
-      revision: main
+      revision: 307755dd2ad4d320e14de162e8e5ef018f29d929  # track: main
 
     # ── マクロ / コンボのランタイム編集 ─────────────────────────
     - name: zmk-feature-runtime-combo
       remote: cormoran
-      revision: main
+      revision: d9490e7b5d41c516221d131241009e81740efcee  # track: main
     - name: zmk-feature-runtime-macro
       remote: cormoran
-      revision: main
+      revision: 38530962eb7061b60efcb98e84585cfb1f0cb6de  # track: main
 
     # ── DYA Studio の診断タブ ───────────────────────────────────
     - name: zmk-feature-kscan-diagnostics
       remote: cormoran
-      revision: main
+      revision: 1432f7fe0cfe903cd7d3c9931ae6bd6f2e1f328e  # track: main
     - name: zmk-feature-input-stream
       remote: cormoran
-      revision: main
+      revision: aeb015908a42a7615ccdccc7feb3a10d23132a71  # track: main
     - name: zmk-module-devtool
       remote: cormoran
-      revision: main
+      revision: 9938a2c73c06d6e65ba2c0b68c9aa044a467eafc  # track: main
     - name: zmk-feature-device-info
       remote: cormoran
-      revision: main
+      revision: 8cedd2dd9f04e19ea5a17b94914dd47a09d8db11  # track: main
     - name: zmk-feature-watchdog
       remote: cormoran
-      revision: main
+      revision: 84ad14c6c3645dc40b23f45d08ab45418655f912  # track: main
     - name: zmk-feature-zephyr-setting-expose
       remote: cormoran
-      revision: main
+      revision: 5c89bc71122840ea46032fc241bef8665b99728a  # track: main
     - name: zmk-feature-studio-rpc-perf
       remote: cormoran
-      revision: main
+      revision: b6ccb08cdc46e9e6341b0c42b97f78f05df0939e  # track: main
 
     # ── 接続先 / OS ごとのデフォルトレイヤー ────────────────────
     # NOTE: main には custom Studio RPC が入っておらず Studio のパネルから
     #       操作できないため codex/custom-rpc-rewrite を使う。
     - name: zmk-feature-default-layer
       remote: cormoran
-      revision: codex/custom-rpc-rewrite
+      revision: b25cb5b324da2d9bbc84e1877c775f5b2b7c6845  # track: codex/custom-rpc-rewrite
     - name: zmk-feature-os-detection
       remote: cormoran
-      revision: main
+      revision: 3052679f645b8fc1997275c2eaa6b86bdd55ca01  # track: main
 
     # ── トラックボール (PMW3610) ────────────────────────────────
     # badjeff/zmk-pmw3610-driver から cormoran さんの custom Studio RPC 対応版へ。
@@ -100,48 +100,48 @@ manifest:
     # CONFIG_PMW3610_SWAP_XY / _INVERT_X / _INVERT_Y になる (Studio から変更可)。
     - name: zmk-driver-pmw3610-with-custom-studio-rpc
       remote: cormoran
-      revision: main
+      revision: 5c34ea0eec246a1c986111417cd779b53144629a  # track: main
 
     # 現状 PMW3610 のみビルドしているが、参考リポジトリ
     # (shakushakupanda/zmk-config-moNa2-v2) に揃えて入れておく。
     # センサーを載せ替えるときに向こうの paw3222.overlay をそのまま使える。
     - name: zmk-driver-paw3222
       remote: sekigon-gonnoc
-      revision: main
+      revision: df652881be2520bde4f64ab6ca35e4c5708f4f9b  # track: main
 
     # ── その他 ──────────────────────────────────────────────────
     # v0.3-branch は Zephyr 3.5 向けなので main へ
     - name: zmk-rgbled-widget
       remote: caksoylar
-      revision: main
+      revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b  # track: main
     - name: zmk-input-processor-keybind
       remote: zettaface
-      revision: main
+      revision: 64303bd3932bfa7f49261fc6d0c9a3fdd06f8271  # track: main
 
     # ── スクロール / ジェスチャー ───────────────────────────────
     - name: zmk-scroll-snap
       remote: kot149
-      revision: v1
+      revision: 62a669c32353576df18d6f835ccb2133e2238e1d  # track: v1
     # kot149/v1 のフォーク。ZMK v0.4 の endpoints API 改名対応と、
     # ジェスチャー入力中のカーソル抑制が入っている。
     # DT プロパティと Kconfig は kot149/v1 から変わっていないので
     # gestures.dtsi はそのまま使える。
     - name: zmk-mouse-gesture
       remote: shakushakupanda
-      revision: suppress-cursor-while-active
+      revision: 10597a47ed60b5f7c07710a0eeff7f7cb9576a1e  # track: suppress-cursor-while-active
     # ジェスチャーを Flash に保存し DYA Studio から編集できるようにする。
     # 書き換え対象は DT インスタンス0番のみなので、RPC 用ノードを
     # mona2_r.overlay の先頭側で定義して0番を取らせている。
     - name: zmk-module-mouse-gesture-rpc
       remote: shakushakupanda
-      revision: main
+      revision: 1374f1d487d5df07d6d990f1c058d9c7a313f90d  # track: main
     - name: zmk-listeners
       remote: ssbb
-      revision: v1
+      revision: c240ceaf353d3138bea7695eef17049b7ade995b  # track: v1
     # 慣性スクロール。RPC モジュール内蔵のものは弾き検出が無く
     # トラックボールに向かないため、こちらを使う (README 参照)。
     - name: zmk-input-processor-scroll-inertia
       remote: mjmjm0101
-      revision: main
+      revision: f7dadefee453d555fe066d13a3de3bb60739b45e  # track: main
   self:
     path: config

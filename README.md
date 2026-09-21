@@ -8,6 +8,40 @@ ZMK v0.4 系（Zephyr 4.1 / HWMv2）で、DYA Studio の機能を一通り有効
 
 ---
 
+## モジュールのリビジョンは SHA で固定しています
+
+`config/west.yml` の `revision:` はブランチ名ではなく SHA です。追跡先は
+行末の `# track: <ref>` コメントに残してあります。
+
+```yaml
+- name: zmk
+  remote: cormoran
+  revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8  # track: main+dya
+```
+
+### なぜ固定するのか
+
+浮動のままだと、**自分では何も変えていないのにビルドが落ちます。** 上流の
+モジュールが動くと `west update` が別物を引いてくるためです。加えて
+
+* GitHub Actions の **artifact は 90 日で消える**
+* ファームには config のバージョンが埋まらない
+
+この2つが重なると、「いま快調に使っているファーム」を二度と作れなくなります。
+同じコミットをビルドしても結果が変わるからです。
+
+### 更新のしかた
+
+```sh
+tools/west-pins.py            # 追跡先の先頭に固定し直す
+tools/west-pins.py --unpin    # ブランチ名に戻す
+tools/west-pins.py --check    # 追跡先が進んでいるか見るだけ（書き換えない）
+```
+
+上流に追随したくなったら、`--unpin` した枝で CI を通してから、`main` 側で
+`tools/west-pins.py` を実行して SHA を進めます。**浮動の manifest を
+`main` にマージしないこと。**
+
 ## レイヤー構成
 
 | index | ノード | Studio 表示名 | 用途 |
