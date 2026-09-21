@@ -124,6 +124,10 @@
 	y-codes = <INPUT_REL_Y>;
 	xy-to-scroll-enabled;
 	active-layers = <BIT(5)>;
+	/* 実機で詰めた Studio 値 0.40x を既定にする (2/5)。
+	 * settings_reset すると Studio 値は消えるので DT 側に持たせる。 */
+	scale-multiplier = <2>;
+	scale-divisor = <5>;
 	/* ホイールの符号はカーソルの Y と逆 (正の WHEEL = 上スクロール、
 	 * 正の REL_Y = カーソル下) なので、縦スクロールだけ1回余分に反転が要る。
 	 * 横は X -> HWHEEL でそのまま合う。torabo-tsuki も同じ。
