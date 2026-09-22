@@ -25,9 +25,9 @@
  *   1000 * 0.016 = 16 カウント → 16/16 = 1ノッチ/クリック
  *
  * 200 のままだと 3カウント = 3/16 ノッチで、5〜6クリック回さないと 1行
- * 進まない。トラックボール側 (zip_wheel_scaler) はこの値を通らないので
- * ここを上げても影響しない。SYM2 の &zip_wheel_scaler 3 1 は掛け算なので
- * 3ノッチ/クリックのまま変わらない。 */
+ * 進まない。トラックボール側はこの値を通らないので
+ * ここを上げても影響しない。エンコーダ出力には mscbase×msclyr が
+ * 掛かるので、最終段数はそちらとの掛け算になる。 */
 #undef ZMK_POINTING_DEFAULT_SCRL_VAL
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 1000
 #include <dt-bindings/zmk/pointing.h>
@@ -95,17 +95,6 @@
 
 / {
     input_processors {
-        zip_wheel_scaler: zip_wheel_scaler {
-            compatible = "zmk,input-processor-scaler";
-            #input-processor-cells = <2>;
-            type = <INPUT_EV_REL>;
-
-            // 縦スクロール(WHEEL)と横スクロール(HWHEEL)の両方を対象にする
-
-            codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
-            track-remainders;
-        };
-
         /* エンコーダ (&msc) 用ランタイムスケーラ2段。Studioから倍率・対象レイヤーを
          * 変えられる。実効 = mscbase × msclyr。
          * labelは7文字以内にすること (NAME_MAX_LEN=8、NUL込みで8に収める)。
@@ -118,7 +107,7 @@
             x-codes = <INPUT_REL_HWHEEL>;
             y-codes = <INPUT_REL_WHEEL>;
             track-remainders;
-            scale-multiplier = <1>;
+            scale-multiplier = <4>;
             scale-divisor = <1>;
             active-layers = <0>; // 全レイヤー (0=全部)。ベース感度はここ
         };
