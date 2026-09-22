@@ -49,7 +49,7 @@ tools/west-pins.py --check    # 追跡先が進んでいるか見るだけ（書
 | 0 | `default_layer` | Base | ベース（Windows） |
 | 1 | `iPad` | iPad | ベース（iPad / iOS）。`default-layer` が OS 判定で有効化 |
 | 2 | `NUM,SYM1` | NUM/SYM1 | 数字・記号 |
-| 3 | `SYM2` | SYM2 | 記号2。`&msc` の 5倍速スクロール対象 |
+| 3 | `SYM2` | SYM2 | 記号2。`&msc` の層別倍率（`msclyr`・既定3倍）対象 |
 | 4 | `MOUSE` | Mouse | マウス |
 | 5 | `NUM-SCROLL` | NUM/Scroll | スクロール（慣性・スナップの対象） |
 | 6 | `gest_arrow` | Gest: Arrow | ジェスチャー（矢印）＋ F キー |
@@ -68,7 +68,7 @@ iPad レイヤーは Windows との**差分だけ**を書いてあり、残り�
 
 **レイヤー番号は複数のファイルに散らばっています。** 順序を変えるときは以下すべてを追従させてください。
 
-* `config/mona2.keymap` の `&lt` / `&mo` / `&to`、および `&msc_input_listener` の `layers`
+* `config/mona2.keymap` の `&lt` / `&mo` / `&to`、および `mscbase` / `msclyr` の `active-layers`
 * `config/gestures.dtsi` の `GESTURE_ROUTE(N, ...)`
 * `boards/shields/mona2/mona2.dtsi` の `active-layers = <BIT(N)>`
 * `boards/shields/mona2/mona2_r.overlay` の慣性スクロールの `layer`
@@ -213,17 +213,19 @@ ZMK 側で補正するはずの `input_listener.c` の `apply_resolution_scaling
 | `ZMK_POINTING_DEFAULT_SCRL_VAL` | 効く | 効かない |
 | `&msc` の `time-to-max-speed-ms` など | 効く | 効かない |
 | `scroll_up_down` の `tap-ms` | 効く | 効かない |
-| `zip_wheel_scaler` の `scale-multiplier` / `scale-divisor` | 効かない | 効く |
+| `mscbase` / `msclyr` の `scale-multiplier` / `scale-divisor` | 効く | 効かない |
 | `CONFIG_ZMK_POINTING_SMOOTH_SCROLLING` | 効く | 効く |
 
 `ZMK_POINTING_DEFAULT_SCRL_VAL` は `SCRL_UP` / `SCRL_DOWN` / `SCRL_LEFT` /
 `SCRL_RIGHT` というマクロの中身でしかなく、それを使うのは `&msc` の引数だけです。
-トラックボールはセンサーから直接 REL イベントが出て `zip_wheel_scaler` を通るので、
+トラックボールはセンサーから直接 REL イベントが出て独自のリスナーチェーンを通るので、
 `&msc` も `SCRL_*` も経由しません。
 
-SYM2 レイヤーには `&msc_input_listener` 側で `&zip_wheel_scaler 5 1` が掛かっており、
-そこだけエンコーダが 5倍（5ノッチ/クリック）になります。掛け算なので
-`SCRL_VAL` を変えても比率は保たれます。
+エンコーダ出力には `&msc_input_listener` 側で `mscbase`（全層・既定1倍）と
+`msclyr`（SYM2のみ・既定3倍）が掛かります。実効＝①×②で、どちらも Studio の
+トラックボール設定から倍率・対象レイヤーを変えられます。掛け算なので
+`SCRL_VAL` を変えても比率は保たれます。回転・一時レイヤー・スナップ・反転・
+マッピングの各欄は `msc` 系では使わないので触らないこと（Studio側で非表示にできないため）。
 
 `CONFIG_ZMK_POINTING_SMOOTH_SCROLLING` は `input_listener.c` の
 `input_handler` の中で `INPUT_REL_WHEEL` / `INPUT_REL_HWHEEL` に一律で掛かるため、

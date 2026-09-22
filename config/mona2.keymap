@@ -107,7 +107,7 @@
             x-codes = <INPUT_REL_HWHEEL>;
             y-codes = <INPUT_REL_WHEEL>;
             track-remainders;
-            scale-multiplier = <4>;
+            scale-multiplier = <1>;
             scale-divisor = <1>;
             active-layers = <0>; // 全レイヤー (0=全部)。ベース感度はここ
         };
