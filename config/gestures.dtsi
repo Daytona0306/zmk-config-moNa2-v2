@@ -141,11 +141,15 @@
 
 /* 3. トラックボール信号のルーティング設定 */
 &trackball_central_listener {
-    /* 共通のマクロ定義: 指定したレイヤーにプロセッサを紐付ける */
+    /* 共通のマクロ定義: 指定したレイヤーにプロセッサを紐付ける。
+     * 先頭の transform は必須。route は base チェーンを置き換えるため、
+     * ここに書かないとジェスチャーが軸反転前の生符号を見て上下左右が逆になる。
+     * torabo-tsuki と同形にすること。 */
     #define GESTURE_ROUTE(L, PROC) \
         route_l##L { \
             layers = <L>; \
             input-processors = < \
+                &zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) \
                 &PROC \
                 &zip_xy_scaler 0 1 \
             >; \
