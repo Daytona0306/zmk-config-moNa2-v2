@@ -16,6 +16,8 @@ manifest:
       url-base: https://github.com/sekigon-gonnoc
     - name: zettaface          # Input Processor Keybind
       url-base: https://github.com/zettaface
+    - name: Daytona0306          # hold-tap hook入りZMK + ランタイムモジュール置き場
+      url-base: https://github.com/Daytona0306
   projects:
     # ── ZMK 本体 ────────────────────────────────────────────────
     # DYA Studio のランタイムマクロ / ランタイムコンボは cormoran さんの
@@ -23,8 +25,8 @@ manifest:
     # DYA 向けブランチ。ベースは ZMK v0.4 系 (Zephyr 4.1) で、旧
     # v0.3-branch+dya (Zephyr 3.5) からメジャーバージョンが上がっている。
     - name: zmk
-      remote: cormoran
-      revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8  # track: main+dya
+      remote: Daytona0306
+      revision: e6ffb72d36e221ebb159fda41b5e1caaf538a455  # track: dya-holdtap-hook
       import: app/west.yml
 
     # ── DYA Studio 共通基盤 ─────────────────────────────────────
@@ -140,8 +142,17 @@ manifest:
       revision: c240ceaf353d3138bea7695eef17049b7ade995b  # track: v1
     # 慣性スクロール。RPC モジュール内蔵のものは弾き検出が無く
     # トラックボールに向かないため、こちらを使う (README 参照)。
+    # dya-inertia-hook入りfork。weak hookのみで本体改変なし。
     - name: zmk-input-processor-scroll-inertia
-      remote: mjmjm0101
-      revision: f7dadefee453d555fe066d13a3de3bb60739b45e  # track: main
+      remote: Daytona0306
+      revision: 566dd35382fb04e8999e8f6e01fa5a0eae47369b  # track: dya-inertia-hook
+
+    # ── hold-tap / inertia 実行時調整 (torabo-tsuki LP 移植) ──
+    - name: zmk-feature-holdtap-config
+      remote: Daytona0306
+      revision: d0220f59193741c9b1552748527221e0691bbaef  # track: main
+    - name: zmk-feature-inertia-config
+      remote: Daytona0306
+      revision: 5930975f80745a8ffb32b276fc3f3afd77e461ac  # track: main
   self:
     path: config
