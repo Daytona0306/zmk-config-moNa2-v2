@@ -105,6 +105,38 @@
             codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
             track-remainders;
         };
+
+        /* エンコーダ (&msc) 用ランタイムスケーラ2段。Studioから倍率・対象レイヤーを
+         * 変えられる。実効 = mscbase × msclyr。
+         * labelは7文字以内にすること (NAME_MAX_LEN=8、NUL込みで8に収める)。
+         * x/y-codesは両方必須・同要素数 (上流bindingの制約)。反転なし=現行と同符号。 */
+        mscbase: mscbase {
+            compatible = "zmk,input-processor-runtime";
+            processor-label = "mscbase";
+            #input-processor-cells = <0>;
+            type = <INPUT_EV_REL>;
+            x-codes = <INPUT_REL_HWHEEL>;
+            y-codes = <INPUT_REL_WHEEL>;
+            track-remainders;
+            scale-multiplier = <1>;
+            scale-divisor = <1>;
+            active-layers = <0>; // 全レイヤー (0=全部)。ベース感度はここ
+        };
+
+        msclyr: msclyr {
+            compatible = "zmk,input-processor-runtime";
+            processor-label = "msclyr";
+            #input-processor-cells = <0>;
+            type = <INPUT_EV_REL>;
+            x-codes = <INPUT_REL_HWHEEL>;
+            y-codes = <INPUT_REL_WHEEL>;
+            track-remainders;
+            scale-multiplier = <3>;
+            scale-divisor = <1>;
+            // BIT(3)=SYM2のみ。旧speed_up(layers=<3>)+scaler 3 1と同等。
+            // BIT()がkeymap側で使えるか不明なためリテラル8で書く。
+            active-layers = <8>; // レイヤー別倍率はここ。対象はStudioのマスクで足せる
+        };
     };
 
     combos {
@@ -424,9 +456,10 @@
     };
 };
 
+/* エンコーダ (&msc) 出力チェーン。倍率と対象レイヤーは上の
+ * mscbase (ベース感度・全層) と msclyr (レイヤー別倍率) で持ち、
+ * Studioから変えられる。旧speed_up(layers=<3>)+zip 3 1と同等が既定。
+ * 2段ともactiveな層では乗算になるため、マスクは排他に保つこと。 */
 &msc_input_listener {
-    speed_up {
-        layers = <3>; // 感度を上げたいレイヤー番号 (SYM2)
-        input-processors = <&zip_wheel_scaler 3 1>; // 3倍速（分子3、分母1）に設定
-    };
+    input-processors = <&mscbase &msclyr>;
 };
