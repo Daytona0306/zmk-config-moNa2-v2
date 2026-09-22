@@ -236,6 +236,42 @@ HID のレポートマップが変わるので、切り替えるとペアリン�
 
 ---
 
+## DYA Studio で変えられる設定
+
+焼き直しなしに Studio から変えられる項目。共通事項:
+
+* 変更は Flash に保存され、再起動で維持される
+* 操作後は約1.5秒待ってから更新ボタンで再読込すること。待たずに試すと旧値のまま動く
+* 保存前の電源断は消える。Reset で DT 既定に戻る
+
+### hold-tap タイミング (`dya__holdtap` 8キー)
+
+`mt_` / `lt_` × `tapping_term_ms` / `quick_tap_ms` / `flavor` /
+`require_prior_idle_ms`。DT既定は `tapping-term 180` / `quick-tap 300` /
+`balanced`（`config/mona2.keymap` の `&mt` / `&lt` と一致）。
+`require-prior-idle` は使っていない（DTから削除済み、既定 `-1`=無効）。
+
+### 慣性スクロール (`dya__inertia` 11キー)
+
+先頭 `0_enabled`（1=有効/0=無効）に続く `friction` / `limit` /
+`decay_fast` / `decay_slow` / `decay_tail` / `fast` / `slow` /
+`start` / `move` / `stop`。
+
+注意: DT既定は mona2調整値（`start 30/move 45/friction 25/
+decay 996/985/982`）で、Studio既定（torabo値: `friction 35/
+decay 992/980/975/start 40/move 60`）とは一致していない。
+Reset は DT既定（mona2調整値）に戻る。
+
+### エンコーダ感度 (`mscbase` / `msclyr`)
+
+トラックボール設定に出る。実効 = `mscbase`（全層・既定1倍）×
+`msclyr`（SYM2のみ・既定3倍）。倍率と対象レイヤー（チェック指定）を
+変えられる。対象が重なると乗算になるためマスクは排他に保つこと。
+回転・一時レイヤー・スナップ・反転・マッピングの各欄は `msc` 系では
+使わないので触らないこと（Studio側で非表示にできないため）。
+
+---
+
 ## 左右で揃えないといけない設定
 
 `config/mona2_r.conf` と `config/mona2_l.conf` の両方に必要です。片側だけだとビルドが落ちます。
