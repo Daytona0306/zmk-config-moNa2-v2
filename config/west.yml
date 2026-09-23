@@ -150,7 +150,7 @@ manifest:
     # ── hold-tap / inertia 実行時調整 (torabo-tsuki LP 移植) ──
     - name: zmk-feature-holdtap-config
       remote: Daytona0306
-      revision: d0220f59193741c9b1552748527221e0691bbaef  # track: main
+      revision: 4b0d4f01a1780acf6a99b453f5d7e8d71fef555d  # track: main
     - name: zmk-feature-inertia-config
       remote: Daytona0306
       revision: 5930975f80745a8ffb32b276fc3f3afd77e461ac  # track: main
