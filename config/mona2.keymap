@@ -293,7 +293,7 @@
             display-name = "Base";
             bindings = <
 &lt 12 Q          &lt 9 L       &lt 11 U  &lt 8 COMMA                  &lt 10 PERIOD                                             &kp F        &kp W  &kp R    &kp Y            &kp P
-&mt LCTRL E       &kp I         &lt 6 A   &lt 4 O                      &kp MINUS                                    &kp F13     &kp K        &kp T  &lt 6 N  &kp S            &kp H
+&mt LCTRL E       &kp I         &lt 6 A   &lt 4 O                      &kp MINUS                                    &kp LC(F13)  &kp K        &kp T  &lt 6 N  &kp S            &kp H
 &mt LEFT_SHIFT Z  &kp X         &kp C     &kp V                        &kp SEMICOLON  &kp LA(LG(K))                 &kp C_MUTE  &kp G        &kp D  &kp M    &mt RIGHT_ALT J  &lt 4 B
 &kp LALT          &kp LEFT_WIN  &kp TAB   &mt LEFT_SHIFT INT_MUHENKAN  &lt 5 ENTER    &mt LEFT_CONTROL BACKSPACE    &lt 3 DEL   &lt 2 SPACE                                   &mt RIGHT_SHIFT INT_HENKAN
             >;
