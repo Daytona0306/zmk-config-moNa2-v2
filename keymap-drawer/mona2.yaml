@@ -1,0 +1,588 @@
+layout: {zmk_keyboard: mona2}
+layers:
+  Base:
+  - {t: Q, h: 'Gest: PowerToys'}
+  - {t: L, h: 'Gest: VDesktop'}
+  - {t: U, h: 'Gest: Window'}
+  - {t: ',', h: 'Gest: Tab'}
+  - {t: ., h: 'Gest: Nav'}
+  - F
+  - W
+  - R
+  - Y
+  - P
+  - {t: E, h: LCTRL}
+  - I
+  - {t: A, h: 'Gest: Arrow'}
+  - {t: O, h: Mouse}
+  - '-'
+  - Ctl+F13
+  - K
+  - T
+  - {t: N, h: 'Gest: Arrow'}
+  - S
+  - H
+  - {t: Z, h: LEFT SHIFT}
+  - X
+  - C
+  - V
+  - ;
+  - MUTE
+  - Alt+Gui+K
+  - G
+  - D
+  - M
+  - {t: J, h: RIGHT ALT}
+  - {t: B, h: Mouse}
+  - LALT
+  - LEFT WIN
+  - TAB
+  - {t: INT MUHENKAN, h: LEFT SHIFT}
+  - {t: ENTER, h: NUM/Scroll}
+  - {t: BACKSPACE, h: LEFT CONTROL}
+  - {t: DEL, h: SYM2}
+  - {t: SPACE, h: NUM/SYM1}
+  - {t: INT HENKAN, h: RIGHT SHIFT}
+  iPad:
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: E, h: LGUI}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - LCTRL
+  - {t: ▽, type: trans}
+  - {t: LANG2, h: LEFT SHIFT}
+  - {t: ▽, type: trans}
+  - {t: BACKSPACE, h: LEFT GUI}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: LANG1, h: RIGHT SHIFT}
+  NUM/SYM1:
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - '='
+  - '['
+  - /
+  - '-'
+  - Sft+INTERNATIONAL 1
+  - {t: ▽, type: trans}
+  - ;
+  - ''''
+  - ']'
+  - \
+  - INT YEN
+  - Meh+2
+  - Meh+6
+  - PSCRN
+  - Sft+Gui+S
+  - Alt+PSCRN
+  - Gui+Sft+V
+  - {t: ▽, type: trans}
+  - CAPSLOCK
+  - Sft+Ctl+2
+  - Sft+Ctl+I
+  - Sft+Ctl+1
+  - SCROLLLOCK
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: LANGUAGE 1, h: LEFT SHIFT}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: Mouse, h: toggle}
+  SYM2:
+  - Sft+1
+  - Sft+2
+  - Sft+3
+  - Sft+4
+  - Sft+5
+  - Sft+6
+  - Sft+7
+  - Sft+8
+  - Sft+9
+  - Sft+0
+  - Sft+=
+  - Sft+{
+  - '?'
+  - Sft+_
+  - Sft+INTERNATIONAL 1
+  - {t: ▽, type: trans}
+  - Sft+;
+  - Sft+'
+  - Sft+]
+  - Sft+\
+  - Sft+INT YEN
+  - Sft+Alt+-
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: Brows, h: Explorer}
+  - {t: Macro, h: rec/play}
+  - Gui+Alt+U
+  - {t: ▽, type: trans}
+  - Ctl+Gui+LEFT
+  - Ctl+Gui+RIGHT
+  - Alt+Ctl+Gui+D
+  - Alt+Ctl+Gui+LEFT
+  - Alt+Ctl+Gui+RIGHT
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: LANGUAGE 2, h: LEFT SHIFT}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - Ctl+Gui+F4
+  Mouse:
+  - ESCAPE
+  - '7'
+  - '8'
+  - '9'
+  - {t: ▽, type: trans}
+  - MUTE
+  - VOL DN
+  - VOL UP
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - '='
+  - '4'
+  - '5'
+  - {t: '6', type: held}
+  - '-'
+  - {t: ▽, type: trans}
+  - {t: Mouse, h: Fwd}
+  - {t: ▽, type: trans}
+  - NUM/Scroll
+  - {t: ▽, type: trans}
+  - {t: Mouse, h: Fwd}
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  - KP PLUS
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: Mouse, h: Back}
+  - {t: Mouse, h: L Click}
+  - {t: Mouse, h: M Click}
+  - {t: Mouse, h: R Click}
+  - {t: Mouse, h: Back}
+  - .
+  - ','
+  - '['
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: Base, h: toggle}
+  NUM/Scroll:
+  - {t: ▽, type: trans}
+  - Ctl+7
+  - Ctl+8
+  - Ctl+9
+  - {t: ▽, type: trans}
+  - LANGUAGE 2
+  - '7'
+  - '8'
+  - '9'
+  - KP SLASH
+  - {t: ▽, type: trans}
+  - Ctl+4
+  - Ctl+5
+  - Ctl+6
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - Sft+_
+  - '4'
+  - '5'
+  - '6'
+  - KP ASTERISK
+  - Ctl+0
+  - Ctl+1
+  - Ctl+2
+  - Ctl+3
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  - '-'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - .
+  - KP PLUS
+  'Gest: Arrow':
+  - ESC
+  - F1
+  - F2
+  - F3
+  - F4
+  - INS
+  - HOME
+  - UP
+  - END
+  - PG UP
+  - {t: ▽, type: trans}
+  - F5
+  - {t: F6, type: held}
+  - F7
+  - F8
+  - {t: ▽, type: trans}
+  - Ctl+TAB
+  - LEFT
+  - UP
+  - RIGHT
+  - PG DN
+  - {t: ▽, type: trans}
+  - F9
+  - F10
+  - F11
+  - F12
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - Sft+Gui+V
+  - LEFT
+  - DOWN
+  - RIGHT
+  - Ctl+Alt+Gui+V
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - INT HENKAN
+  - {t: ▽, type: trans}
+  Bluetooth:
+  - {t: BT, h: '0'}
+  - {t: BT, h: '1'}
+  - {t: BT, h: '2'}
+  - {t: BT, h: '3'}
+  - {t: BT, h: '4'}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: BT DISC, h: '0'}
+  - {t: BT DISC, h: '1'}
+  - {t: BT DISC, h: '2'}
+  - {t: BT DISC, h: '3'}
+  - {t: BT DISC, h: '4'}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: BT, h: '5'}
+  - {t: BT, h: '6'}
+  - {t: ▽, type: trans}
+  - Studio
+  - OUT BLE
+  - OUT USB
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: Boot, h: loader}
+  - {t: BT DISC, h: '5'}
+  - {t: BT DISC, h: '6'}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - BT CLR
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - BT CLR ALL
+  'Gest: Tab':
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  'Gest: VDesktop':
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  'Gest: Nav':
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  'Gest: Window':
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  'Gest: PowerToys':
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+combos:
+- p: [39, 38]
+  k: {t: ESC, h: 'Gest: Tab'}
+- p: [11, 12]
+  k: TAB
+- p: [10, 11]
+  k: TAB
+- p: [0, 1]
+  k: ESCAPE
+- p: [21, 22]
+  k: CAPSLOCK
+- p: [8, 9]
+  k: BACKSPACE
+- p: [12, 13]
+  k: LANGUAGE 2
+- p: [17, 18]
+  k: LANGUAGE 1
+- p: [29, 30]
+  k: Bluetooth
+- p: [31, 30]
+  k: NUM/Scroll
+- p: [17, 18, 12, 13, 37, 40]
+  k: Soft Off
+- p: [2, 3]
+  k: Alt+Ctl+TAB
+- p: [29, 31]
+  k: {t: L+R, h: Click}
