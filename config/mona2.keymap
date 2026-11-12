@@ -37,7 +37,11 @@
 /* &mg_set N を提供。押している間だけ RPC 側のセットが有効になる。
  * ただし Studio からは割り当てられないので、下の mg_set_0/1/2 を使う。 */
 #include <mouse-gesture-rpc.dtsi>
-#include "gestures.dtsi"
+/* ジェスチャー定義は機種共通 (zmk-dya-common)。機種差はこの2つだけ。
+ * BASE_LAYER は矢印ジェスチャーのレイヤー番号で、そこから連番で6枚使う。 */
+#define DYA_GESTURE_LISTENER   trackball_central_listener
+#define DYA_GESTURE_BASE_LAYER 6
+#include <dya-common/gestures.dtsi>
 
 /* DYA Studio 用の「セット番号固定」ジェスチャーキー。
  *

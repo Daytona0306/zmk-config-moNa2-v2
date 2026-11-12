@@ -145,7 +145,7 @@ manifest:
     # dya-inertia-hook入りfork。weak hookのみで本体改変なし。
     - name: zmk-input-processor-scroll-inertia
       remote: Daytona0306
-      revision: 566dd35382fb04e8999e8f6e01fa5a0eae47369b  # track: dya-inertia-hook
+      revision: cb6409d9e4511583af0b7bf43e813f1c740b275c  # track: dya-inertia-hook
 
     # ── hold-tap / inertia 実行時調整 (torabo-tsuki LP 移植) ──
     - name: zmk-feature-holdtap-config
@@ -154,5 +154,9 @@ manifest:
     - name: zmk-feature-inertia-config
       remote: Daytona0306
       revision: 5930975f80745a8ffb32b276fc3f3afd77e461ac  # track: main
+    # ── 機種共通の定義 (ジェスチャーなど)。moNa2 / torabo-tsuki LP / 小人キーで共有 ──
+    - name: zmk-dya-common
+      remote: Daytona0306
+      revision: e4cf8c2fe5816a291b76187c69792a9cfdd27773  # track: ccr-18c0f811-gen3zl
   self:
     path: config

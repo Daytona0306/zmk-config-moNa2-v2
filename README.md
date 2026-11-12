@@ -69,7 +69,7 @@ iPad レイヤーは Windows との**差分だけ**を書いてあり、残り�
 **レイヤー番号は複数のファイルに散らばっています。** 順序を変えるときは以下すべてを追従させてください。
 
 * `config/mona2.keymap` の `&lt` / `&mo` / `&to`、および `mscbase` / `msclyr` の `active-layers`
-* `config/gestures.dtsi` の `GESTURE_ROUTE(N, ...)`
+* keymap 冒頭の `DYA_GESTURE_BASE_LAYER`（ジェスチャー6枚の先頭。定義本体は `zmk-dya-common` の `gestures.dtsi`）
 * `boards/shields/mona2/mona2.dtsi` の `active-layers = <BIT(N)>`
 * `boards/shields/mona2/mona2_r.overlay` の慣性スクロールの `layer`
 * `config/mona2_r.conf` の `CONFIG_ZMK_DEFAULT_LAYER_MIN/MAX_INDEX`
