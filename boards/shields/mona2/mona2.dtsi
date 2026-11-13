@@ -135,3 +135,12 @@
 	 * settings_reset で上下だけ逆になった。 */
 	y-invert;	/* NUM-SCROLL (iPad レイヤー挿入で 4 -> 5) */	
 };
+
+/* RC という名前のマクロが2つある:
+ *   matrix_transform.h  RC(row, col)   … 上の transform の map 用
+ *   modifiers.h         RC(keycode)    … 右 Ctrl 修飾 (keys.h 経由)
+ * 先頭の include 順で map 用の定義を効かせているので、map より後のここで
+ * 右 Ctrl 修飾に戻す。keys.h は #pragma once で、keymap が include し直しても
+ * 再定義されないため、戻さないと keymap の RC(キー) が前処理エラーになる。 */
+#undef RC
+#define RC(keycode) APPLY_MODS(MOD_RCTL, keycode)
