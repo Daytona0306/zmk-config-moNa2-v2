@@ -4,7 +4,8 @@ ZMK v0.4 系（Zephyr 4.1 / HWMv2）で、DYA Studio の機能を一通り有効
 
 * `mona2_right` がトラックボール側（central）、`mona2_left` が反対側
 * v0.3 から上げる場合は、先に `mona2_reset` を左右に焼いてください。設定の保存形式が変わっています
-* キーマップは keymap-editor および ZMK Studio / DYA Studio で編集できます
+* キーマップは DYA Studio で編集できます (Flash に保存。ファイルにも残すなら `config/mona2.keymap` に書き写す)。
+  keymap-editor は GitHub 連携が終わったので使っていません。図は下の「キーマップ」を見てください
 
 
 ## キーマップ
