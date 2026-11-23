@@ -6,6 +6,14 @@ ZMK v0.4 系（Zephyr 4.1 / HWMv2）で、DYA Studio の機能を一通り有効
 * v0.3 から上げる場合は、先に `mona2_reset` を左右に焼いてください。設定の保存形式が変わっています
 * キーマップは keymap-editor および ZMK Studio / DYA Studio で編集できます
 
+
+## キーマップ
+
+全レイヤーとコンボの図です。`config/mona2.keymap` を push すると GitHub Actions
+(`.github/workflows/draw.yml`) が keymap-drawer で作り直し、同じブランチへ自動でコミットします。
+
+![moNa2 のキーマップ](keymap-drawer/mona2.svg)
+
 ---
 
 ## モジュールのリビジョンは SHA で固定しています
