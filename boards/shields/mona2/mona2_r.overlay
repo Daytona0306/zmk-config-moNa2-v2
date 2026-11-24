@@ -120,6 +120,10 @@
     scroll_inertia_free: scroll_inertia_free {
         compatible = "zmk,input-processor-scroll-inertia";
         #input-processor-cells = <0>;
+        /* Ctrl / Cmd 押下中は慣性を止める (流れている最中のものも次の tick で止まる)。
+         * ズームは「レポート1回 = 1段」で数えるので、慣性が流れるとズームが止まらなくなる。
+         * zip_zoom_step の mods と揃えること。0x99 = MOD_LCTL | MOD_LGUI | MOD_RCTL | MOD_RGUI */
+        pause-mod = <0x99>;
         axis      = <0>;          /* 両軸 — 斜めスクロール可能 */
         layer     = <5>;          /* NUM-SCROLL レイヤー */
         scale     = <1000>;
@@ -160,6 +164,24 @@
 };
 
 // Overrides for the input listener node
+/* Ctrl / Cmd + ボールのズームを1ノッチ単位にまとめる (modules/zoom-step、torabo-tsuki LP・小人キーと同じもの)。
+ *
+ * スムーススクロールのせいでボールは 1/16 ノッチ程度のホイールを大量に送る。
+ * スクロールは合計量で動くので気にならないが、ブラウザや PDF ビューア等の
+ * Ctrl+ホイールのズームは「イベント1回 = 1段」で数えるため効きすぎる。
+ * 修飾キー押下中はホイールを貯めて、1ノッチ分たまるごとに1回だけ送る。
+ * ★scroll_inertia_free より前に置くこと★ 修飾キー押下中のホイールはここで止めるので、
+ * ズーム中に弾いても慣性が arm されない。 */
+/ {
+    zip_zoom_step: zip_zoom_step {
+        compatible = "zmk,input-processor-zoom-step";
+        #input-processor-cells = <0>;
+        /* 0 = ホストの1ノッチ (Windows なら 16 カウント)。
+         * ズームが速すぎるなら大きく、遅すぎるなら小さくする。 */
+        counts-per-step = <0>;
+    };
+};
+
 &trackball_central_listener {
     status = "okay";
     device = <&trackball_central>;
@@ -170,5 +192,6 @@
 			<&mouse_runtime_input_processor>,
 			<&scroll_runtime_input_processor>,
 			<&zip_scroll_snap>,
+			<&zip_zoom_step>,
             <&scroll_inertia_free>;
 };

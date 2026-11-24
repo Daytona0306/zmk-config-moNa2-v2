@@ -1,3 +1,7 @@
 build:
+  # このリポジトリ自身のモジュール (modules/ 以下: ズームの段送り)
+  cmake: modules
+  kconfig: modules/Kconfig
   settings:
     board_root: .
+    dts_root: modules

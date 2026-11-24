@@ -6,7 +6,8 @@ ZMK v0.4 系（Zephyr 4.1 / HWMv2）で、DYA Studio の機能を一通り有効
 * v0.3 から上げる場合は、先に `mona2_reset` を左右に焼いてください。設定の保存形式が変わっています
 * キーマップは DYA Studio で編集できます (Flash に保存。ファイルにも残すなら `config/mona2.keymap` に書き写す)。
   keymap-editor は GitHub 連携が終わったので使っていません。図は下の「キーマップ」を見てください
-
+* Ctrl (または Cmd) を押しながらボールでスクロールすると、ズームが1ノッチずつ進む
+  (`modules/zoom-step`、torabo-tsuki LP・小人キーと同じもの)。押している間は慣性スクロールも止まる
 
 ## キーマップ
 
